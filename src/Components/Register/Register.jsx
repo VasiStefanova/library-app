@@ -1,84 +1,56 @@
 import React, { useState } from 'react';
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './Register.css';
 
 
 const Register = () => {
-  const [isUserNameValid, setUserNameValid] = useState(false);
-  const [isPasswordValid, setPasswordValid] = useState(false);
-  const [passwordValue, setPasswordValue] = useState('');
-  const [repeatPasswordValue, setRepeatPasswordValue] = useState('');
-  const [isRepeatPasswordValid, setRepeatPasswordValid] = useState(false);
+  const [valid, setValid] = useState(false);
+  const [form, setForm] = useState({});
 
-  const checkUserNameValid = (event) => {
-    const currentUserName = event.target.value;
-    let isValid = false;
-    if (currentUserName && currentUserName.length >= 3 && currentUserName.length <= 25) {
-      isValid = true;
-    }
-
-    setUserNameValid(isValid);
-  };
-
-  const checkPasswordValid = (event) => {
-    const currentPassword = event.target.value;
-    let isValid = false;
-    let isRepPassValid = false;
-    if (currentPassword && currentPassword.length >= 3 && currentPassword.length <= 25) {
-      isValid = true;
-    }
-
-    isRepPassValid = currentPassword === repeatPasswordValue;
-
-    setRepeatPasswordValid(isRepPassValid);
-    setPasswordValid(isValid);
-    setPasswordValue(currentPassword);
-  };
-
-  const checkRepeatPasswordValid = (event) => {
-    const currentRepeatPassword = event.target.value;
-    let isValid = false;
-
-    if (currentRepeatPassword === passwordValue) {
-      isValid = true;
-    }
-
-    setRepeatPasswordValid(isValid);
-    setRepeatPasswordValue(currentRepeatPassword);
+  const setField = (field, value) => {
+    setForm({
+      ...form,
+      [field]: value
+    });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-undef
-    alert(isRepeatPasswordValid && isPasswordValid && isUserNameValid);
+    event.stopPropagation();
+    setValid(!valid);
   };
 
   return (
-    <Form className="register-form" onSubmit={onSubmit}>
+    <Form className="register-form" onSubmit={onSubmit} validated={valid} noValidate autoComplete="off">
       <Form.Group className="mb-3" controlId="formBasicUsername">
         <Form.Label>Username</Form.Label>
-        <Form.Control type="username" placeholder="Enter username" onChange={checkUserNameValid} />
+        <Form.Control type="text" placeholder="Enter username" required minLength={3} maxLength={25} onChange={e => setField('username', e.target.value)} />
         <Form.Text className="text-muted">
           Note: Your username must be between 3-25 characters.
         </Form.Text>
+        <Form.Control.Feedback type='invalid'>
+          Invalid username! Username must be between 3-25 charcters long!
+        </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={checkPasswordValid} />
+        <Form.Label>Enter Password</Form.Label>
+        <Form.Control type="password" required minLength={3} maxLength={25} placeholder="Password" onChange={e => setField('password', e.target.value)} />
         <Form.Text className="text-muted">
           Note: Your password must be between 3-25 characters.
         </Form.Text>
+        <Form.Control.Feedback type='invalid'>
+          Invalid password! Password must be between 3-25 charcters long!
+        </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicRepeatPassword">
-        <Form.Label>Repeat Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={checkRepeatPasswordValid} />
+      <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>Upload Avatar</Form.Label>
+        <Form.Control type="file" />
       </Form.Group>
 
-      <Button variant="dark" type="submit" disabled={!isUserNameValid || !isPasswordValid || !isRepeatPasswordValid}>
+      <Button variant="dark" type="submit">
         Submit
       </Button>
     </Form>
