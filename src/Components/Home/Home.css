@@ -1,0 +1,5 @@
+.welcome-msg {
+    display: flexbox;
+    justify-content: center;
+    text-align: center;
+}
