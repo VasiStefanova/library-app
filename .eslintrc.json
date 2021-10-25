@@ -69,5 +69,8 @@
         "comma-dangle": "off",
         "jsx-quotes": "off",
         "eol-last": "warn"
+    },
+    "env": {
+        "browser": true
     }
 }
