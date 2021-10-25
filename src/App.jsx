@@ -10,6 +10,7 @@ import LogIn from './Components/LogIn/LogIn';
 import ShowAllBooks from './Components/Books/ShowAllBooks';
 import ViewIndividualBook from './Components/Books/ViewIndividualBook';
 
+
 // eslint-disable-next-line func-style
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         {
           // secret paths
         }
-        <Route path="/books" component={ShowAllBooks} />
+        <Route path="/books" exact component={ShowAllBooks} />
         <Route path="/books/:id" component={ViewIndividualBook} />
       </Switch>
     </BrowserRouter>
