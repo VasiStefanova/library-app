@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
 import { data } from '../../Data/data.js';
-import ViewIndividualBook from './ViewIndividualBook.jsx';
+// import ViewIndividualBook from './ViewIndividualBook.jsx';
 
 const ShowAllBooks = () =>{
 
@@ -11,7 +11,7 @@ const ShowAllBooks = () =>{
       <div key={book.id}>
         <img scr={book.cover} />
         <div>{book.title} - {book.author}</div>
-        <button onClick={ViewIndividualBook(book)}>Details</button>
+        <button>Details</button>
       </div>
 
     );
