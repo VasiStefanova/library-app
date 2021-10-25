@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './Register.css';
-import { Redirect } from 'react-router-dom';
-// import LogIn from '../LogIn/LogIn';
+import { useHistory } from 'react-router-dom';
 
 
 const Register = () => {
@@ -16,6 +15,7 @@ const Register = () => {
       [field]: value
     });
   };
+  const history = useHistory();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -24,15 +24,14 @@ const Register = () => {
     const formData = new FormData();
     Object.keys(form).forEach(key => formData.append(`${key}`, `${form[key]}`));
 
+
     fetch(`http://localhost:5000/api/v1/users/`, {
       method: 'POST',
       body: formData,
     })
       .then(response => response.json())
       .then(()=> {
-        // debugger;
-        // eslint-disable-next-line indent
-        <Redirect to='http://localhost:3000/login' />;
+        history.push('/login');
       })
       .catch(err => console.error(err));
   };
