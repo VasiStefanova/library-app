@@ -1,0 +1,22 @@
+.book-container {
+    max-width: 250px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.reviews-container {
+    margin: 50px auto;
+    text-align: center;
+}
+
+.heading {
+    text-align: center;
+    font-style: italic;
+
+}
+.no-reviews-msg {
+    margin: 50px auto;
+    align-items: center;
+    text-align: center;
+    font-style: oblique;
+}
