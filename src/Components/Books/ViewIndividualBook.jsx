@@ -3,8 +3,6 @@ import { data } from '../../Data/data.js';
 // import PropTypes from 'prop-types';
 
 const ViewIndividualBook = () =>{
-
-  debugger;
   const foundBook = data.find(book => book.id === 3);
   return (
     <div id={foundBook.id} className='ViewIndividualBook'>

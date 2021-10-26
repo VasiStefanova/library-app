@@ -9,6 +9,7 @@ import Register from './Components/Register/Register';
 import LogIn from './Components/LogIn/LogIn';
 import ShowAllBooks from './Components/Books/ShowAllBooks';
 import ViewIndividualBook from './Components/Books/ViewIndividualBook';
+import ReadBookReviews from './Components/Reviews/Book Reviews/ReadBookReviews';
 
 
 // eslint-disable-next-line func-style
@@ -25,7 +26,8 @@ function App() {
           // secret paths
         }
         <Route path="/books" exact component={ShowAllBooks} />
-        <Route path="/books/:id" component={ViewIndividualBook} />
+        <Route path="/books/:id" exact component={ViewIndividualBook} />
+        <Route path="/books/:id/reviews" component={ReadBookReviews} />
       </Switch>
     </BrowserRouter>
   );
