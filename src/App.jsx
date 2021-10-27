@@ -3,7 +3,7 @@ import './App.css';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './Navigation/Navbar.jsx';
-import { BrowserRouter, Switch, Route, PrivateRoute } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import Register from './Components/Register/Register';
 import LogIn from './Components/LogIn/LogIn';
@@ -21,9 +21,9 @@ function App() {
         <Route path="/home" component={Home} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={LogIn} />
-        <PrivateRoute path="/books" exact component={ShowAllBooks} />
-        <PrivateRoute path="/books/:id" exact component={ViewIndividualBook} />
-        <PrivateRoute path="/books/:id/reviews" component={ReadBookReviews} />
+        <Route path="/books" exact component={ShowAllBooks} />
+        <Route path="/books/:id" exact component={ViewIndividualBook} />
+        <Route path="/books/:id/reviews" component={ReadBookReviews} />
       </Switch>
     </BrowserRouter>
   );
