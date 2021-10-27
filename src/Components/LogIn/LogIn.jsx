@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './LogIn.css';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
-const LogIn = () => {
+const LogIn = ({ history }) => {
   const [valid, setValid] = useState(false);
   const [form, setForm] = useState({});
 
@@ -15,7 +16,6 @@ const LogIn = () => {
       [field]: value
     });
   };
-  const history = useHistory();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -67,6 +67,10 @@ const LogIn = () => {
       </Button>
     </Form>
   );
+};
+
+LogIn.propTypes = {
+  history: PropTypes.object
 };
 
 export default LogIn;
