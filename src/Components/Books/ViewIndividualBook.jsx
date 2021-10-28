@@ -1,14 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { useParams } from 'react-router';
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 
 
-const ViewIndividualBook = () => {
-
-  const { id } = useParams();
+const ViewIndividualBook = (props) => {
+  console.log(props);
+  const id = props.match.params.id;
   const [book, setBook] = useState({});
 
+  const back = () => props.history.goBack();
   useEffect(()=>{
     fetch(`http://localhost:5000/api/v1/books/${id}/`, {
       headers: {
@@ -29,20 +29,17 @@ const ViewIndividualBook = () => {
         <img src={`http://localhost:5000/covers/${book.cover}`} />
         <div>{book.title} - {book.author}</div>
         <div>Status: {book.status} | Rating: {book.rating}</div>
+        <button onClick={back}>Back</button>
       </div>
     </>
   );
 
 };
 
-// ViewIndividualBook.propTypes = {
-//   id: PropTypes.number,
-//   title: PropTypes.string,
-//   author: PropTypes.string,
-//   status: PropTypes.string,
-//   cover: PropTypes.string,
-//   rating: PropTypes.number
+ViewIndividualBook.propTypes = {
+  match: PropTypes.object,
+  history: PropTypes.object,
 
-// };
+};
 
 export default ViewIndividualBook;
