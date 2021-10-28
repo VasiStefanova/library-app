@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './Register.css';
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
-const Register = () => {
+const Register = ({ history }) => {
   const [valid, setValid] = useState(false);
   const [form, setForm] = useState({});
 
@@ -15,7 +15,6 @@ const Register = () => {
       [field]: value
     });
   };
-  const history = useHistory();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -30,8 +29,10 @@ const Register = () => {
       body: formData,
     })
       .then(response => response.json())
-      .then(()=> {
-        history.push('/login');
+      .then((response)=> {
+        if (response.id) {
+          history.push('/login');
+        }
       })
       .catch(err => console.error(err));
   };
@@ -70,6 +71,10 @@ const Register = () => {
       </Button>
     </Form>
   );
+};
+
+Register.propTypes = {
+  history: PropTypes.object,
 };
 
 export default Register;
