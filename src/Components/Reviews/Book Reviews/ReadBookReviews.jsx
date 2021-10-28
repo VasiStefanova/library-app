@@ -3,18 +3,17 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
 import Figure from 'react-bootstrap/Figure';
 import './ReadBookReviews.css';
 import UserReview from './User Review/UserReviwes';
+import PropTypes from 'prop-types';
 
 
-const ReadBookReviews = () => {
+const ReadBookReviews = ({ match }) => {
+  const id = match.params.id;
 
   const [bookInfo, setBookInfo] = useState({});
   const [reviews, setReviews] = useState([]);
-  const { id } = useParams();
   useEffect(() => {
     fetch(`http://localhost:5000/api/v1/books/${id}/reviews`, {
       headers: {
@@ -73,5 +72,7 @@ const ReadBookReviews = () => {
   );
 };
 
-
+ReadBookReviews.propTypes = {
+  match: PropTypes.object,
+};
 export default ReadBookReviews;
