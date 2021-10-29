@@ -2,9 +2,10 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import PropTypes from 'prop-types';
 import Figure from 'react-bootstrap/Figure';
+import UpdateUserReviewsLink from './UpdateUserReviewsLink';
 
 
-const UserReview = ({ title, content, avatar, votes }) => {
+const UserReview = ({ title, content, avatar, votes, userId }) => {
 
   return (
     <Col>
@@ -13,7 +14,7 @@ const UserReview = ({ title, content, avatar, votes }) => {
           src={`http://localhost:5000/covers/${avatar}`}
           roundedCircle
           width={171}
-          height={180}
+          height={171}
         />
         <Figure.Caption>
           <h4>{title}</h4>
@@ -25,6 +26,7 @@ const UserReview = ({ title, content, avatar, votes }) => {
           </svg>
           <p> {votes.length} Likes!</p>
         </Figure.Caption>
+        <UpdateUserReviewsLink userId={userId} />
       </Figure>
     </Col>
   );
@@ -36,5 +38,6 @@ UserReview.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
   avatar: PropTypes.string,
-  votes: PropTypes.array
+  votes: PropTypes.array,
+  userId: PropTypes.number,
 };
