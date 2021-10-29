@@ -59,6 +59,7 @@ const ReadBookReviews = ({ match }) => {
                 key={review.userId}
                 title={review.title}
                 content={review.content}
+                userId={review.userId}
                 avatar={review.avatar}
                 votes={review.votes} />)}
             </Row>

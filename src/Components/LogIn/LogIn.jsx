@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './LogIn.css';
 import PropTypes from 'prop-types';
-import jwt from 'jsonwebtoken';
+import { getUser } from '../../context/auth-context';
 import { AuthContext } from '../../context/auth-context';
 
 const LogIn = ({ history }) => {
@@ -40,12 +40,13 @@ const LogIn = ({ history }) => {
         }
 
         try {
-          const user = jwt.decode(data.token);
+          debugger;
+          const user = getUser(); // call getUser()
           localStorage.setItem('token', data.token);
           setAuth({ user, isLoggedIn: true });
           history.push('/home');
 
-          console.log(user);
+          // console.log(user);
         } catch {
           throw new Error('Something went wrong!');
         }

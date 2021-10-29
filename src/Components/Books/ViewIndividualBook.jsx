@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 
 const ViewIndividualBook = (props) => {
+<<<<<<< HEAD
 
+=======
+  // console.log(props);
+>>>>>>> 459af12 (minor changes)
   const id = props.match.params.id;
   const [book, setBook] = useState({});
   const back = () => props.history.goBack();
