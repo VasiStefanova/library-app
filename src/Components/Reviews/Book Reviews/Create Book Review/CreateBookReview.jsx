@@ -6,7 +6,7 @@ import { getToken } from '../../../../context/auth-context';
 
 // eslint-disable-next-line react/prop-types
 const CreateBookReview = ({ match }) => {
-  console.log(match);
+  // console.log(match);
 
   const [form, setForm] = useState({});
 
