@@ -13,6 +13,7 @@ const NavigationBar = () => {
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/register">Register</Nav.Link>
           <Nav.Link as={Link} to="/login">Log In</Nav.Link>
+          <Nav.Link as={Link} to="/books">Books</Nav.Link>
           <Nav.Link as={Link} to="/books/5/reviews">5</Nav.Link>
           <Nav.Link as={Link} to="/books/3/reviews">3</Nav.Link>
         </Nav>
