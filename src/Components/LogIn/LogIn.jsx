@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './LogIn.css';
-// import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import jwt from 'jsonwebtoken';
+import { AuthContext } from '../../context/auth-context';
 
 const LogIn = ({ history }) => {
   const [valid, setValid] = useState(false);
   const [form, setForm] = useState({});
+
+  const { setAuth } = useContext(AuthContext);
 
   const setField = (field, value) => {
     setForm({
@@ -32,9 +34,23 @@ const LogIn = ({ history }) => {
     })
       .then(response => response.json())
       .then((data)=> {
-        history.push('/home');
-        console.log(data);
+
+        if (data.message) {
+          throw new Error(data.message);
+        }
+
+        try {
+          const user = jwt.decode(data.token);
+          localStorage.setItem('token', data.token);
+          setAuth({ user, isLoggedIn: true });
+          history.push('/home');
+
+          console.log(user);
+        } catch {
+          throw new Error('Something went wrong!');
+        }
       })
+      .then(()=> history.goBack())
       .catch(err => console.error(err));
   };
 
