@@ -21,10 +21,9 @@ const BorrowBook = ({ status }) =>{
     >Return
     </Button>
   );
+  // userId = null av || userId===user Idlogin return, userId!==
+  return borrow;
 
-  return (
-    { borrow }
-  );
 };
 
 BorrowBook.propsTypes={

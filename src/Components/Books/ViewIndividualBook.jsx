@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
+import BorrowBook from './BorrowBook';
+import Card from 'react-bootstrap/Card';
+
 
 const ViewIndividualBook = (props) => {
 
@@ -22,32 +25,20 @@ const ViewIndividualBook = (props) => {
       .catch(err => console.error(err));
   }, []);
 
-  const [isBorrowed, setIsBorrowed] = useState(book.status==='available');
-  const borrow = isBorrowed ? (
-    <Button onClick={() => {
-      book.status='borrowed';
-      setIsBorrowed(false);
-    }}
-    >Borrow
-    </Button>
-  ) : (
-    <Button onClick={() => {
-      book.status='available';
-      setIsBorrowed(true);
-    }}
-    >Return
-    </Button>
-  );
 
   return (
     <>
-      <div id={book.id} className='ViewIndividualBook'>
-        <img src={`http://localhost:5000/covers/${book.cover}`} />
-        <div>{book.title} - {book.author}</div>
-        <div>Status: {book.status} | Rating: {book.rating}</div>
-        {borrow}
-        <Button onClick={back}>Back</Button>
-      </div>
+      <container key={book.id}>
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={`http://localhost:5000/covers/${book.cover}`} />
+          <Card.Body>
+            <Card.Title>{book.title} - {book.author}</Card.Title>
+          </Card.Body>
+        </Card>
+      </container>
+      <div>Status: {book.status} | Rating: {book.rating ? (book.rating) : ('No ratings')}</div>
+      <BorrowBook status={book.status} />
+      <Button onClick={back}>Back</Button>
     </>
   );
 
