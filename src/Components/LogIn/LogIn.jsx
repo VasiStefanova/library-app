@@ -22,8 +22,9 @@ const LogIn = ({ history }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
+    // debugger;
     setValid(!valid);
-
+    // debugger;
     fetch(`http://localhost:5000/api/v1/users/login`, {
       method: 'POST',
       body: JSON.stringify(form),
@@ -40,13 +41,10 @@ const LogIn = ({ history }) => {
         }
 
         try {
-          debugger;
-          const user = getUser(); // call getUser()
           localStorage.setItem('token', data.token);
+          const user = getUser();
           setAuth({ user, isLoggedIn: true });
-          history.push('/home');
 
-          // console.log(user);
         } catch {
           throw new Error('Something went wrong!');
         }
