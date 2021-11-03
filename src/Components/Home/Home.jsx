@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../context/auth-context';
 import './Home.css';
 import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
@@ -6,12 +7,11 @@ import Card from 'react-bootstrap/Card';
 
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
-import { useState, useEffect } from 'react';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
-
-
+  const { user, isLoggedIn } = useContext(AuthContext);
+  console.log(user, isLoggedIn);
   useEffect(() => {
     fetch(`http://localhost:5000/api/v1/books/`, {
       headers: {
@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <Container fluid className="welcome-msg">
       <h1>Welcome to Library Project!</h1>
-      <h4>Please log in</h4>
+      {isLoggedIn ? <h4>Hello {user.username}!</h4> : <h4>Please log in!</h4>}
       <Carousel>{carouselBooks}</Carousel>
     </Container>
   );

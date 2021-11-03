@@ -38,6 +38,7 @@ function App() {
     isLoggedIn: !!getUser(),
   });
 
+
   return (
     <AuthContext.Provider value={{ ...auth, setAuth }}>
       <BrowserRouter>
@@ -45,6 +46,9 @@ function App() {
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/register" component={Register} />
+          <Route exact path="/">
+            <Redirect to={auth.isLoggedIn ? '/books' : '/login'} />
+          </Route>
           <Route path="/login" component={LogIn} />
           <PrivateRoute path="/books" exact auth={auth.isLoggedIn} component={ShowAllBooks} />
           <PrivateRoute path="/books/:id" exact auth={auth.isLoggedIn} component={ViewIndividualBook} book="Vasi" />
