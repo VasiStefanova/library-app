@@ -57,6 +57,7 @@ const ReadBookReviews = ({ match }) => {
             <Row className="reviews-container">
               {reviews.map(review => <UserReview
                 key={review.userId}
+                bookId={+id}
                 title={review.title}
                 content={review.content}
                 userId={review.userId}
