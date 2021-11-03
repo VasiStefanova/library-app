@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../context/auth-context';
+import { AuthContext, getToken } from '../../context/auth-context';
 import './Home.css';
 import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
@@ -11,13 +11,14 @@ import Card from 'react-bootstrap/Card';
 const Home = () => {
   const [books, setBooks] = useState([]);
   const { user, isLoggedIn } = useContext(AuthContext);
+  // debugger;
   console.log(user, isLoggedIn);
   useEffect(() => {
     fetch(`http://localhost:5000/api/v1/books/`, {
       headers: {
       // Hardcoded authorization token//
       // eslint-disable-next-line max-len
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoibW9ycGhldXMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MzQ1NzgwMzUsImV4cCI6MTY0MzIxODAzNX0.HWMHorMgf3a2EvNPVsvtKxJOFVedn-3kLOANnSiFzmk',
+        'Authorization': `Bearer ${getToken()}`,
       },
     })
 
