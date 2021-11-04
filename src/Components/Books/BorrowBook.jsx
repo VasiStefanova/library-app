@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 
 // under construction
 // eslint-disable-next-line react/prop-types
-const BorrowBook = ({ id, userId, setBookStatus }) =>{
-  // const [BookStatus=status, setBookStatus] = useState(status);
+const BorrowBook = ({ id, userId, changeBookStatus }) =>{
   const [BookUserId=userId, setBookUserId] = useState(userId);
   const { user } = useContext(AuthContext);
 
@@ -21,7 +20,7 @@ const BorrowBook = ({ id, userId, setBookStatus }) =>{
 
       .then(response => response.json())
       .then(data =>{
-        setBookStatus(data.status);
+        changeBookStatus(data.status);
         setBookUserId(data.userId);
       }
       )
@@ -38,7 +37,7 @@ const BorrowBook = ({ id, userId, setBookStatus }) =>{
 
       .then(response => response.json())
       .then(data =>{
-        setBookStatus(data.status);
+        changeBookStatus(data.status);
         setBookUserId(data.userId);
       }
       )
@@ -75,7 +74,7 @@ const BorrowBook = ({ id, userId, setBookStatus }) =>{
 BorrowBook.propsTypes={
   id: PropTypes.number,
   userId: PropTypes.any,
-  setBookStatus: PropTypes.func
+  changeBookStatus: PropTypes.func
 };
 
 export default BorrowBook;
