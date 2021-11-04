@@ -49,7 +49,7 @@ const LogIn = ({ history }) => {
           throw new Error('Something went wrong!');
         }
       })
-      .then(()=> history.goBack())
+      .then(()=> history.push('/home'))
       .catch(err => console.error(err));
   };
 
