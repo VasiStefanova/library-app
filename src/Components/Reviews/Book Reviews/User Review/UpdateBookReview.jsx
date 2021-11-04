@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { getToken } from '../../../../context/auth-context';
 
 
-const UpdateBookReview = ({ match }) => {
+const UpdateBookReview = ({ match, history }) => {
   const { user } = useContext(AuthContext);
   const bookId = +match.params.id;
 
@@ -52,6 +52,7 @@ const UpdateBookReview = ({ match }) => {
         if (response.message) {
           throw new Error(response.message);
         }
+        history.goBack();
       })
       .catch(({ message }) => console.error(message));
   };
@@ -102,5 +103,6 @@ const UpdateBookReview = ({ match }) => {
 
 UpdateBookReview.propTypes = {
   match: PropTypes.object,
+  history: PropTypes.object
 };
 export default UpdateBookReview;
