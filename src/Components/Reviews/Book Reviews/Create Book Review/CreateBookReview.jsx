@@ -3,9 +3,10 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { getToken } from '../../../../context/auth-context';
+import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prop-types
-const CreateBookReview = ({ match }) => {
+const CreateBookReview = ({ match, history }) => {
   // console.log(match);
 
   const [form, setForm] = useState({});
@@ -35,6 +36,7 @@ const CreateBookReview = ({ match }) => {
         if (response.message) {
           throw new Error(response.message);
         }
+        history.goBack();
       })
       .catch(({ message }) => console.error(message));
   };
@@ -76,5 +78,9 @@ const CreateBookReview = ({ match }) => {
   );
 };
 
+CreateBookReview.propTypes = {
+  match: PropTypes.object,
+  history: PropTypes.object
+};
 
 export default CreateBookReview;
