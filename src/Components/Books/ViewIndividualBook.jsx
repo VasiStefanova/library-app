@@ -4,24 +4,26 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import BorrowBook from './BorrowBook';
 import Card from 'react-bootstrap/Card';
-
+import { getToken } from '../../context/auth-context';
 
 const ViewIndividualBook = (props) => {
 
   const id = props.match.params.id;
   const [book, setBook] = useState({});
+  const [bookStatus, setBookStatus] = useState('');
   const back = () => props.history.goBack();
   useEffect(()=>{
     fetch(`http://localhost:5000/api/v1/books/${id}/`, {
       headers: {
-        // Hardcoded authorization token//
-        // eslint-disable-next-line max-len
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoibW9ycGhldXMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MzQ1NzgwMzUsImV4cCI6MTY0MzIxODAzNX0.HWMHorMgf3a2EvNPVsvtKxJOFVedn-3kLOANnSiFzmk',
+        'Authorization': `Bearer ${getToken()}`,
       },
     })
 
       .then(response => response.json())
-      .then(data => setBook(data))
+      .then(data => {
+        setBook(data);
+        setBookStatus(data.status);
+      })
       .catch(err => console.error(err));
   }, []);
 
@@ -37,7 +39,7 @@ const ViewIndividualBook = (props) => {
         </Card>
       </container>
       <div>Status: {book.status} | Rating: {book.rating ? (book.rating) : ('No ratings')}</div>
-      <BorrowBook {...book} />
+      <BorrowBook id={book.id} userId={book.userId} setBookStatus={setBookStatus} />
       <Button onClick={back}>Back</Button>
     </>
   );

@@ -1,25 +1,48 @@
 import React from 'react';
 import { useState, useContext } from 'react';
-import { AuthContext } from '../../context/auth-context';
+import { AuthContext, getToken } from '../../context/auth-context';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 // under construction
 // eslint-disable-next-line react/prop-types
-const BorrowBook = ({ status, userId }) =>{
-  const [BookStatus=status, setBookStatus] = useState(status);
+const BorrowBook = ({ id, userId, setBookStatus }) =>{
+  // const [BookStatus=status, setBookStatus] = useState(status);
   const [BookUserId=userId, setBookUserId] = useState(userId);
   const { user } = useContext(AuthContext);
-  console.log(BookStatus, BookUserId);
 
   const borrowBook = () =>{
-    setBookStatus('borrowed');
-    setBookUserId(user.sub);
+    fetch(`http://localhost:5000/api/v1/books/${id}/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+
+      .then(response => response.json())
+      .then(data =>{
+        setBookStatus(data.status);
+        setBookUserId(data.userId);
+      }
+      )
+      .catch(err => console.error(err));
 
   };
   const returnBook = () =>{
-    setBookStatus('available');
-    setBookUserId(null);
+    fetch(`http://localhost:5000/api/v1/books/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+
+      .then(response => response.json())
+      .then(data =>{
+        setBookStatus(data.status);
+        setBookUserId(data.userId);
+      }
+      )
+      .catch(err => console.error(err));
   };
   // userId = null av || userId===user Idlogin return, userId!==
   if (BookUserId===null ) {
@@ -50,8 +73,9 @@ const BorrowBook = ({ status, userId }) =>{
 };
 
 BorrowBook.propsTypes={
-  status: PropTypes.string,
-  userId: PropTypes.any
+  id: PropTypes.number,
+  userId: PropTypes.any,
+  setBookStatus: PropTypes.func
 };
 
 export default BorrowBook;

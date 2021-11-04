@@ -10,10 +10,12 @@ const NavigationBar = () => {
   const { isLoggedIn, setAuth } = useContext(AuthContext);
 
   const logout = () => {
+    localStorage.removeItem('token');
     setAuth({
       user: { role: '' },
       token: '',
       isLoggedIn: false
+
     });
   };
 
