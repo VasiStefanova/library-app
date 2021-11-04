@@ -78,7 +78,7 @@ const LogIn = ({ history }) => {
       </Form.Group>
 
       <Button variant="dark" type="submit" onClick={onSubmit}>
-        LogIn
+        Log In
       </Button>
     </Form>
   );

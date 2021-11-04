@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 // under construction
 // eslint-disable-next-line react/prop-types
 const BorrowBook = ({ status, userId }) =>{
-  const [BookStatus, setBookStatus] = useState(status);
-  const [BookUserId, setBookUserId] = useState(userId);
+  const [BookStatus=status, setBookStatus] = useState(status);
+  const [BookUserId=userId, setBookUserId] = useState(userId);
   const { user } = useContext(AuthContext);
   console.log(BookStatus, BookUserId);
 
@@ -22,7 +22,7 @@ const BorrowBook = ({ status, userId }) =>{
     setBookUserId(null);
   };
   // userId = null av || userId===user Idlogin return, userId!==
-  if (BookUserId===null) {
+  if (BookUserId===null ) {
     return <Button onClick={borrowBook}>Borrow</Button>;
   } else if (BookUserId===user.sub) {
     return <Button onClick={returnBook}>Return</Button>;
