@@ -21,7 +21,6 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   return (
     <Route
       {...rest} render={(props) => {
-        // console.log(props);
         return auth ?
           <Component {...props} /> :
           <Redirect to='/login' />;
@@ -51,10 +50,10 @@ function App() {
           </Route>
           <Route path="/login" component={LogIn} />
           <PrivateRoute path="/books" exact auth={auth.isLoggedIn} component={ShowAllBooks} />
-          <PrivateRoute path="/books/:id" exact auth={auth.isLoggedIn} component={ViewIndividualBook} book="Vasi" />
+          <PrivateRoute path="/books/:id" exact auth={auth.isLoggedIn} component={ViewIndividualBook} />
           <PrivateRoute path="/books/:id/reviews" exact auth={auth.isLoggedIn} component={ReadBookReviews} />
-          <PrivateRoute path="/books/:id/create-review" auth={auth.isLoggedIn} component={CreateBookReview} />
-          <PrivateRoute path="/books/:id/update-review" auth={auth.isLoggedIn} component={UpdateBookReview} />
+          <PrivateRoute path="/books/:id/create-review" exact auth={auth.isLoggedIn} component={CreateBookReview} />
+          <PrivateRoute path="/books/:id/update-review" exact auth={auth.isLoggedIn} component={UpdateBookReview} />
         </Switch>
       </BrowserRouter>
     </AuthContext.Provider>
