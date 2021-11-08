@@ -21,7 +21,7 @@ const Register = ({ history }) => {
     event.stopPropagation();
     setValid(!valid);
     const formData = new FormData();
-    Object.keys(form).forEach(key => formData.append(`${key}`, `${form[key]}`));
+    Object.keys(form).forEach(key => formData.append(key, form[key]));
 
 
     fetch(`http://localhost:5000/api/v1/users/`, {
@@ -63,7 +63,10 @@ const Register = ({ history }) => {
 
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Upload Avatar</Form.Label>
-        <Form.Control type="file" />
+        <Form.Control
+          type="file"
+          onChange={e => setField('avatar', e.target.files[0])}
+        />
       </Form.Group>
 
       <Button variant="dark" type="submit" onClick={onSubmit}>
