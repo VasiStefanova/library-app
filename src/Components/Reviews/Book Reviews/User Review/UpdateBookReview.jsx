@@ -48,7 +48,6 @@ const UpdateBookReview = ({ match, history }) => {
     })
       .then(response => response.json())
       .then((response)=> {
-        console.log(response);
         if (response.message) {
           throw new Error(response.message);
         }
