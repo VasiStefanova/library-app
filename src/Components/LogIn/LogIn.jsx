@@ -22,9 +22,7 @@ const LogIn = ({ history }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    // debugger;
     setValid(!valid);
-    // debugger;
     fetch(`http://localhost:5000/api/v1/users/login`, {
       method: 'POST',
       body: JSON.stringify(form),
@@ -35,8 +33,7 @@ const LogIn = ({ history }) => {
     })
       .then(response => response.json())
       .then((data)=> {
-
-        if (data.message) {
+        if (!data.token) {
           throw new Error(data.message);
         }
 
@@ -44,12 +41,12 @@ const LogIn = ({ history }) => {
           localStorage.setItem('token', data.token);
           const user = getUser();
           setAuth({ user, isLoggedIn: true });
+          history.push('/home');
 
         } catch {
           throw new Error('Something went wrong!');
         }
       })
-      .then(()=> history.push('/home'))
       .catch(err => console.error(err));
   };
 
