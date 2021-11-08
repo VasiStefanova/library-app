@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prop-types
 const CreateBookReview = ({ match, history }) => {
-  // console.log(match);
 
   const [form, setForm] = useState({});
 
@@ -32,7 +31,6 @@ const CreateBookReview = ({ match, history }) => {
     })
       .then(response => response.json())
       .then((response)=> {
-        console.log(response);
         if (response.message) {
           throw new Error(response.message);
         }
