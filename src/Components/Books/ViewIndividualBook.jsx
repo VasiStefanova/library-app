@@ -6,6 +6,8 @@ import BorrowBook from './BorrowBook';
 import Card from 'react-bootstrap/Card';
 import { getToken } from '../../context/auth-context';
 import Container from 'react-bootstrap/Container';
+import ReadBookReviews from '../Reviews/Book Reviews/ReadBookReviews';
+import './ViewIndividualBook.css';
 
 
 const ViewIndividualBook = (props) => {
@@ -33,7 +35,7 @@ const ViewIndividualBook = (props) => {
 
   return (
     <>
-      <Container key={book.id}>
+      <Container key={book.id} className='book-container'>
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src={`http://localhost:5000/covers/${book.cover}`} />
           <Card.Body>
@@ -42,8 +44,8 @@ const ViewIndividualBook = (props) => {
         </Card>
         <div>Status: {book.status} | Rating: {book.rating ? (book.rating) : ('No ratings')}</div>
         <BorrowBook id={book.id} userId={book.userId} changeBookStatus={setBookStatus} />
-        <Button onClick={back}>Back</Button>
       </Container>
+      <ReadBookReviews id={id} />
     </>
   );
 
