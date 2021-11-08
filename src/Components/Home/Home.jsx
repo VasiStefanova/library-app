@@ -11,12 +11,9 @@ import Card from 'react-bootstrap/Card';
 const Home = () => {
   const [books, setBooks] = useState([]);
   const { user, isLoggedIn } = useContext(AuthContext);
-  // debugger;
-  console.log(user, isLoggedIn);
   useEffect(() => {
     fetch(`http://localhost:5000/api/v1/books/`, {
       headers: {
-      // Hardcoded authorization token//
       // eslint-disable-next-line max-len
         'Authorization': `Bearer ${getToken()}`,
       },
