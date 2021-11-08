@@ -13,10 +13,8 @@ export const AuthContext = createContext({
 export const getToken = () => localStorage.getItem('token') || '';
 
 export const getUser = () => {
-  // console.log('getUser called');
   try {
     const tokenFromStorage = getToken();
-    // console.log(jwt.decode(tokenFromStorage));
     // TODO: Check if token is valid;
     return jwt.decode(tokenFromStorage);
   } catch {
