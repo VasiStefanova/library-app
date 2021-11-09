@@ -16,7 +16,7 @@ const DeleteUserOwnReview = ({ userId, bookId, setReRender }) => {
       }
     })
       .then(response => response.json())
-      .then((data) => {
+      .then(() => {
         setReRender({});
       })
       .catch(err => console.error(err));
