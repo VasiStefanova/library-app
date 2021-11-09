@@ -44,6 +44,7 @@ const ViewIndividualBook = (props) => {
         </Card>
         <div>Status: {book.status} | Rating: {book.rating ? (book.rating) : ('No ratings')}</div>
         <BorrowBook id={book.id} userId={book.userId} changeBookStatus={setBookStatus} />
+        <Button onClick={back}>Back</Button>
       </Container>
       <ReadBookReviews id={id} />
     </>

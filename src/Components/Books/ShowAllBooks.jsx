@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card';
 import { useState, useEffect } from 'react';
 import { getToken } from '../../context/auth-context';
 import PropTypes from 'prop-types';
+import Search from './Search/Search';
 
 
 const ShowAllBooks = ({ history }) =>{
@@ -36,6 +37,7 @@ const ShowAllBooks = ({ history }) =>{
 
   return (
     <Container>
+      {/* <Search /> */}
       <Row>
         {books.map(book =>{
           return (

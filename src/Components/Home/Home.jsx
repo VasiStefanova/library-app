@@ -27,7 +27,7 @@ const Home = () => {
   const carouselBooks = books.map((book) => {
     return (
       <Carousel.Item key={book.id}>
-        <Card style={{ width: '18rem', left: 525 }}>
+        <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src={`http://localhost:5000/covers/${book.cover}`} />
           <Card.Body>
             <Card.Title>{book.title} - {book.author}</Card.Title>
