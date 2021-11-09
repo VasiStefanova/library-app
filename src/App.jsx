@@ -15,6 +15,7 @@ import { AuthContext, getUser } from './context/auth-context';
 import PropTypes from 'prop-types';
 import CreateBookReview from './Components/Reviews/Book Reviews/Create Book Review/CreateBookReview';
 import UpdateBookReview from './Components/Reviews/Book Reviews/User Review/UpdateBookReview';
+import ShowAllUsers from './Components/Admin/ShowAllUsers';
 
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
@@ -54,6 +55,7 @@ function App() {
           <PrivateRoute path="/books/:id/reviews" exact auth={auth.isLoggedIn} component={ReadBookReviews} />
           <PrivateRoute path="/books/:id/create-review" exact auth={auth.isLoggedIn} component={CreateBookReview} />
           <PrivateRoute path="/books/:id/update-review" exact auth={auth.isLoggedIn} component={UpdateBookReview} />
+          <PrivateRoute path="/users/admin" exact auth={auth.isLoggedIn} component={ShowAllUsers} />
         </Switch>
       </BrowserRouter>
     </AuthContext.Provider>
