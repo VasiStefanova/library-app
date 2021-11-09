@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth-context';
 
 const NavigationBar = () => {
-  const { isLoggedIn, setAuth } = useContext(AuthContext);
+  const { user, isLoggedIn, setAuth } = useContext(AuthContext);
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -15,7 +15,6 @@ const NavigationBar = () => {
       user: { role: '' },
       token: '',
       isLoggedIn: false
-
     });
   };
 
@@ -30,6 +29,7 @@ const NavigationBar = () => {
               <Nav.Link as={Link} to="/register">Register</Nav.Link>
             </> :
             <>
+              {user.role === 'admin' && <Nav.Link as={Link} to="/users/admin">Users</Nav.Link>}
               <Nav.Link as={Link} to="/books">Books</Nav.Link>
               <Nav.Link onClick={logout}>Logout</Nav.Link>
             </>}
