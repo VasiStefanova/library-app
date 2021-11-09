@@ -1,7 +1,7 @@
-/* .update-reviews-link {
+.btn-link {
     text-decoration: none;
 }
 
-a:hover {
+.btn-link:hover {
     text-decoration: underline;
-  } */
+  }
