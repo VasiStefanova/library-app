@@ -43,7 +43,7 @@ const ReadBookReviews = ({ id }) => {
             {reviews.find(review => review.userId === user.sub) ?
               null:
               <LeaveReview id={id} />}
-          </Container>s
+          </Container>
 
           <Container>
             <Row className="reviews-container">
