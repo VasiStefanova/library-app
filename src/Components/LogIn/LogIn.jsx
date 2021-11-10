@@ -3,12 +3,15 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './LogIn.css';
 import PropTypes from 'prop-types';
-import { getUser } from '../../context/auth-context';
-import { AuthContext } from '../../context/auth-context';
+import { getUser, getToken } from '../../context/auth-context';
+import { AuthContext, fetchUserInfo } from '../../context/auth-context';
+import AlertDismissible from '../Alerts/ErrorAlert';
 
 const LogIn = ({ history }) => {
   const [valid, setValid] = useState(false);
   const [form, setForm] = useState({});
+  const [errMsg, setErrMsg] = useState('');
+  const [refresh, setRefresh] = useState({});
 
   const { setAuth } = useContext(AuthContext);
 
@@ -17,6 +20,12 @@ const LogIn = ({ history }) => {
       ...form,
       [field]: value
     });
+  };
+
+  const getUserInfo = () => {
+    return getUser()
+      .then(setAuth)
+      .catch(err => console.error(err));
   };
 
   const onSubmit = (event) => {
@@ -39,18 +48,22 @@ const LogIn = ({ history }) => {
 
         try {
           localStorage.setItem('token', data.token);
-          const user = getUser();
-          setAuth({ user, isLoggedIn: true });
+          getUserInfo();
           history.push('/home');
 
         } catch {
           throw new Error('Something went wrong!');
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setErrMsg(err);
+      });
   };
 
-  return (
+
+  return errMsg ?
+    <AlertDismissible history={history} /> :
     <Form className="register-form" onSubmit={onSubmit} validated={valid} noValidate autoComplete="off">
       <Form.Group className="mb-3" controlId="formBasicUsername">
         <Form.Label>Username</Form.Label>
@@ -77,8 +90,7 @@ const LogIn = ({ history }) => {
       <Button variant="dark" type="submit" onClick={onSubmit}>
         Log In
       </Button>
-    </Form>
-  );
+    </Form>;
 };
 
 LogIn.propTypes = {
