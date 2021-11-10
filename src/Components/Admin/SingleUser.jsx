@@ -42,6 +42,24 @@ const SingleUser = ({ setRender, userId, username, avatar, role, points, banstat
 
   const removeBan = () => {
 
+    fetch(`http://localhost:5000/api/v1//admin/users/${userId}/ban`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        'banned': 0,
+        'description': 'unbanned',
+        // just a random date in the future so the unban point works//
+        'expiration': 1637712000000
+      }),
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Content-Type': 'application/json'
+      }
+
+    })
+      .then(response => response.json())
+      .then(() => setRender({}))
+      .catch(err => console.error(err));
+
   };
 
   return (
@@ -59,7 +77,7 @@ const SingleUser = ({ setRender, userId, username, avatar, role, points, banstat
       <td>{role}</td>
       <td>{points}</td>
       <td>
-        {banstatus ?
+        {banstatus && banstatus.banned === 1 ?
           <>
             <Badge bg="danger">
               banned
