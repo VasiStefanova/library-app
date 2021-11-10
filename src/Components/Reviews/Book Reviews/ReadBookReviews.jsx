@@ -18,7 +18,7 @@ const ReadBookReviews = ({ id }) => {
   // This will be used by child components
   // to trigger useEffect on some change in the child.
   const [reRender, setReRender] = useState({});
-  const { user } = useContext(AuthContext);
+  const { user, isBanned } = useContext(AuthContext);
   useEffect(() => {
     fetch(`http://localhost:5000/api/v1/books/${id}/reviews`, {
       headers: {
@@ -40,9 +40,9 @@ const ReadBookReviews = ({ id }) => {
         <>
           <Container className="heading">
             <h2> User Reviews: </h2>
-            {reviews.find(review => review.userId === user.sub) ?
+            {reviews.find(review => review.userId === user.id) ?
               null:
-              <LeaveReview id={id} />}
+              <LeaveReview id={id} isBannedUser={isBanned} />}
           </Container>
 
           <Container>
@@ -61,7 +61,7 @@ const ReadBookReviews = ({ id }) => {
         </> :
         <Container className="no-reviews-msg align-self-center">
           <h3> There are no user reviews for this book yet! Be the first to write one.</h3>
-          <LeaveReview id={id} />
+          <LeaveReview id={id} isBannedUser={isBanned} />
         </Container>}
     </>
   );
