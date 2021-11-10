@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import './App.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './Navigation/Navbar.jsx';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
@@ -10,13 +10,11 @@ import LogIn from './Components/LogIn/LogIn';
 import ShowAllBooks from './Components/Books/ShowAllBooks';
 import ViewIndividualBook from './Components/Books/ViewIndividualBook';
 import ReadBookReviews from './Components/Reviews/Book Reviews/ReadBookReviews';
-import { useState } from 'react';
-import { AuthContext, getUser } from './context/auth-context';
+import { AuthContext, getUser, getDecodedUser } from './context/auth-context';
 import PropTypes from 'prop-types';
 import CreateBookReview from './Components/Reviews/Book Reviews/Create Book Review/CreateBookReview';
 import UpdateBookReview from './Components/Reviews/Book Reviews/User Review/UpdateBookReview';
 import ShowAllUsers from './Components/Admin/ShowAllUsers';
-
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   return (
@@ -32,12 +30,17 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
 
 // eslint-disable-next-line func-style
 function App() {
-
+  const user = getDecodedUser();
   const [auth, setAuth] = useState({
-    user: getUser(),
-    isLoggedIn: !!getUser(),
+    user,
+    isLoggedIn: !!user
   });
 
+  useEffect(() => {
+    getUser()
+      .then(setAuth)
+      .catch(err => console.error(err));
+  }, []);
 
   return (
     <AuthContext.Provider value={{ ...auth, setAuth }}>
@@ -47,15 +50,15 @@ function App() {
           <Route path="/home" component={Home} />
           <Route path="/register" component={Register} />
           <Route exact path="/">
-            <Redirect to={auth.isLoggedIn ? '/books' : '/login'} />
+            <Redirect to={auth?.isLoggedIn ? '/books' : '/login'} />
           </Route>
           <Route path="/login" component={LogIn} />
-          <PrivateRoute path="/books" exact auth={auth.isLoggedIn} component={ShowAllBooks} />
-          <PrivateRoute path="/books/:id" exact auth={auth.isLoggedIn} component={ViewIndividualBook} />
-          <PrivateRoute path="/books/:id/reviews" exact auth={auth.isLoggedIn} component={ReadBookReviews} />
-          <PrivateRoute path="/books/:id/create-review" exact auth={auth.isLoggedIn} component={CreateBookReview} />
-          <PrivateRoute path="/books/:id/update-review" exact auth={auth.isLoggedIn} component={UpdateBookReview} />
-          <PrivateRoute path="/users/admin" exact auth={auth.isLoggedIn} component={ShowAllUsers} />
+          <PrivateRoute path="/books" exact auth={auth?.isLoggedIn} component={ShowAllBooks} />
+          <PrivateRoute path="/books/:id" exact auth={auth?.isLoggedIn} component={ViewIndividualBook} />
+          <PrivateRoute path="/books/:id/reviews" exact auth={auth?.isLoggedIn} component={ReadBookReviews} />
+          <PrivateRoute path="/books/:id/create-review" exact auth={auth?.isLoggedIn} component={CreateBookReview} />
+          <PrivateRoute path="/books/:id/update-review" exact auth={auth?.isLoggedIn} component={UpdateBookReview} />
+          <PrivateRoute path="/users/admin" exact auth={auth?.isLoggedIn} component={ShowAllUsers} />
         </Switch>
       </BrowserRouter>
     </AuthContext.Provider>
