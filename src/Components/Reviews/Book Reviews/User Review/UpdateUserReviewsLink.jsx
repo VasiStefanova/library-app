@@ -4,17 +4,18 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../../../context/auth-context';
 import './UpdateUserReviewsLink.css';
 
+import Button from 'react-bootstrap/Button';
 const UpdateUserReviewsLink = ({ userId, bookId }) => {
-  const { user } = useContext(AuthContext);
+  const { user, isBanned } = useContext(AuthContext);
   const history = useHistory();
 
-
-  return user.sub === userId ?
-    <a
+  return user.id === userId ?
+    <Button
+      disabled={isBanned}
+      variant="outline-secondary" size="sm"
       onClick={() => history.push(`/books/${bookId}/update-review`)}
-      className="btn btn-link update-reviews-link"
     > Update your review
-    </a> :
+    </Button> :
     null;
 };
 
