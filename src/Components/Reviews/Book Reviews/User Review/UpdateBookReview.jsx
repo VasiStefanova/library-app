@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { getToken } from '../../../../context/auth-context';
+import Container from 'react-bootstrap/Container';
+import Figure from 'react-bootstrap/Figure';
 
 
 const UpdateBookReview = ({ match, history }) => {
@@ -12,6 +14,7 @@ const UpdateBookReview = ({ match, history }) => {
   const bookId = +match.params.id;
 
   const [bookReview, setBookReview] = useState({});
+  const [bookInfo, setBookInfo] = useState({});
 
   const setField = (field, value) => {
     bookReview[field] = value;
@@ -19,14 +22,15 @@ const UpdateBookReview = ({ match, history }) => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/users/${user.sub}/reviews`, {
+    fetch(`http://localhost:5000/api/v1/users/${user.id}/reviews`, {
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       }
     })
       .then(respone => respone.json())
       .then(data => {
-        const { title, content } = data.find(r => r.bookId === bookId);
+        const { title, content, bookTitle, cover } = data.find(r => r.bookId === bookId);
+        setBookInfo({ bookTitle, cover });
         setBookReview({ title, content });
       })
       .catch(err => console.error(err));
@@ -37,7 +41,6 @@ const UpdateBookReview = ({ match, history }) => {
     event.stopPropagation();
     // setValid(!valid);
 
-    // eslint-disable-next-line react/prop-types
     fetch(`http://localhost:5000/api/v1/books/${bookId}/reviews`, {
       method: 'PUT',
       body: JSON.stringify(bookReview),
@@ -57,14 +60,28 @@ const UpdateBookReview = ({ match, history }) => {
   };
 
   return (
-    <>
+    <Form className='create-review-form'>
+      <Container className='book-container'>
+        <Figure>
+          <Figure.Image
+            thumbnail
+            width={171}
+            height={180}
+            alt={bookInfo.bookTitle}
+            src={`http://localhost:5000/covers/${bookInfo.cover}`}
+          />
+          <Figure.Caption>
+            Book Title: {bookInfo.bookTitle}
+          </Figure.Caption>
+        </Figure>
+      </Container>
+
       <FloatingLabel controlId="floatingTextarea" label="Title" className="mb-3">
         <Form.Control
           required
           minLength={5}
           maxLength={50}
           as="textarea"
-          style={{ width: '500px' }}
           placeholder="Leave a comment here"
           defaultValue={bookReview.title}
           onChange={e => setField('title', e.target.value)}
@@ -81,7 +98,7 @@ const UpdateBookReview = ({ match, history }) => {
           maxLength={500}
           as="textarea"
           placeholder="Leave a comment here"
-          style={{ height: '100px' }, { width: '500px' }}
+          style={{ height: '100px' }}
           onChange={e => setField('content', e.target.value)}
         />
         <Form.Control.Feedback type='invalid'>
@@ -89,13 +106,14 @@ const UpdateBookReview = ({ match, history }) => {
         </Form.Control.Feedback>
       </FloatingLabel>
       <Button
+        style={{ margin: '10px auto' }}
         variant="dark"
         type="submit"
         onClick={onSubmit}
       >
         Update
       </Button>
-    </>
+    </Form>
   );
 
 };
