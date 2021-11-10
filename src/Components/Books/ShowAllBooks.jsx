@@ -8,7 +8,6 @@ import Card from 'react-bootstrap/Card';
 import { useState, useEffect } from 'react';
 import { getToken } from '../../context/auth-context';
 import PropTypes from 'prop-types';
-import Search from './Search/Search';
 
 
 const ShowAllBooks = ({ history }) =>{
@@ -32,12 +31,13 @@ const ShowAllBooks = ({ history }) =>{
   const routeChange = (id) =>{
     const path = `/books/${id}`;
     history.push(path);
+    // history.push('/nothing');
+    // history.goBack();
   };
 
 
   return (
     <Container>
-      {/* <Search /> */}
       <Row>
         {books.map(book =>{
           return (
@@ -60,22 +60,10 @@ const ShowAllBooks = ({ history }) =>{
     </Container>
   );
 
-  // return (
-  //   <Container key={book.id}>
-  //     <div>
-  //       <img src={`http://localhost:5000/covers/${book.cover}`} />
-  //       <div>{book.title} - {book.author}</div>
-  //       <Button onClick={() => routeChange(book.id)}>
-  //         Details
-  //       </Button>
-  //     </div>
-  //   </Container>
-  // );
 };
 
 ShowAllBooks.propTypes = {
   history: PropTypes.object,
-
 };
 
 
