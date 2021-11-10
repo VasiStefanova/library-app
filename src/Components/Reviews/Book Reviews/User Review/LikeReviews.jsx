@@ -1,11 +1,10 @@
 import { AuthContext, getToken } from '../../../../context/auth-context';
 import React, { useContext } from 'react';
-import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 
 const Like = ({ bookId, reviewerId, setReRender, votes }) => {
-  const { user } = useContext(AuthContext);
+  const { user, isBanned } = useContext(AuthContext);
 
   const toggleLike = () => {
     fetch(`http://localhost:5000/api/v1/books/${bookId}/reviews/${reviewerId}`, {
@@ -19,9 +18,12 @@ const Like = ({ bookId, reviewerId, setReRender, votes }) => {
       .catch(err => console.error(err));
   };
 
-  return votes.find(vote => vote.userId === user.sub) ?
+  return votes.find(vote => vote.userId === user.id) ?
     <>
-      <svg onClick={toggleLike} xmlns="http://www.w3.org/2000/svg" color="#ea39b8" width="20" height="20" fill="currentColor" className="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+      <svg
+        onClick={isBanned ? null: toggleLike} xmlns="http://www.w3.org/2000/svg" color="#ea39b8"
+        width="20" height="20" fill="currentColor" className="bi bi-suit-heart-fill" viewBox="0 0 16 16"
+      >
         <path
           d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784
         0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"
@@ -29,7 +31,10 @@ const Like = ({ bookId, reviewerId, setReRender, votes }) => {
       </svg>
     </> :
     <>
-      <svg onClick={toggleLike} xmlns="http://www.w3.org/2000/svg" color="#ea39b8" width="20" height="20" fill="currentColor" className="bi bi-suit-heart" viewBox="0 0 16 16">
+      <svg
+        onClick={isBanned ? null: toggleLike}
+        xmlns="http://www.w3.org/2000/svg" color="#ea39b8" width="20" height="20" fill="currentColor" className="bi bi-suit-heart" viewBox="0 0 16 16"
+      >
         <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345
         4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695
         1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024
