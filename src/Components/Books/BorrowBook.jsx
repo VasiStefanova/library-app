@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 // eslint-disable-next-line react/prop-types
 const BorrowBook = ({ id, userId, changeBookStatus }) =>{
   const [BookUserId=userId, setBookUserId] = useState(userId);
-  const { user } = useContext(AuthContext);
+  const { user, isBanned } = useContext(AuthContext);
 
   const borrowBook = () =>{
     fetch(`http://localhost:5000/api/v1/books/${id}/`, {
@@ -45,29 +45,12 @@ const BorrowBook = ({ id, userId, changeBookStatus }) =>{
   };
   // userId = null av || userId===user Idlogin return, userId!==
   if (BookUserId===null ) {
-    return <Button onClick={borrowBook}>Borrow</Button>;
-  } else if (BookUserId===user.sub) {
-    return <Button onClick={returnBook}>Return</Button>;
+    return <Button disabled={isBanned} onClick={borrowBook}>Borrow</Button>;
+  } else if (BookUserId===user.id) {
+    return <Button disabled={isBanned} onClick={returnBook}>Return</Button>;
   } else {
     return null;
   }
-  // const [isBorrowed, setIsBorrowed] = useState(status==='available');
-  // const borrow = isBorrowed ? (
-  //   <Button onClick={() => {
-  //     status='borrowed';
-  //     setIsBorrowed(false);
-  //   }}
-  //   >Borrow
-  //   </Button>
-  // ) : (
-  //   <Button onClick={() => {
-  //     status='available';
-  //     setIsBorrowed(true);
-  //   }}
-  //   >Return
-  //   </Button>
-  // );
-  // return borrow;
 
 };
 
