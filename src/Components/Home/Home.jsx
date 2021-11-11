@@ -47,7 +47,7 @@ const Home = () => {
 
   return (
     <Container fluid className="welcome-msg">
-      <h1>Welcome to Library Project!</h1>
+      <h1>Welcome to our library!</h1>
       {isLoggedIn ? <h4>Hello {user.username}!</h4> : <h4>Please log in!</h4>}
       {isLoggedIn && isBanned ? <AlertDismissible isBanned={isBanned} /> : null}
       <Carousel>{carouselBooks}</Carousel>
