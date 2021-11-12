@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import jwt from 'jsonwebtoken';
+import fetchRequest from '../requests/server-requests';
 
 export const AuthContext = createContext({
   user: {
@@ -51,12 +52,15 @@ export const getUser = async () => {
 };
 
 export const fetchUserInfo = (userId) => {
-  return fetch(`http://localhost:5000/api/v1/users/${userId}`, {
+
+  const args = {
+    path: `users/${userId}`,
     headers: {
       'Authorization': `Bearer ${getToken()}`,
-    }
-  })
-    .then(response => response.json())
-    .catch(err => console.error(err));
+    },
+    handler: data => data
+  };
+
+  return fetchRequest(args);
 };
 
