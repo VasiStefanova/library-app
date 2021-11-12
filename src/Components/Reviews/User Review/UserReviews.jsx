@@ -6,7 +6,6 @@ import UpdateUserReviewsLink from './UpdateUserReviewsLink';
 import defaultAvatar from '../../../Data/default-avatar.png';
 import DeleteUserOwnReview from './DeleteUserOwnReview';
 import Like from './LikeReviews';
-import Button from '@restart/ui/esm/Button';
 
 const UserReview = ({ title, content, avatar, votes, userId, bookId, setReRender }) => {
 
@@ -33,8 +32,6 @@ const UserReview = ({ title, content, avatar, votes, userId, bookId, setReRender
   );
 };
 
-export default UserReview;
-
 UserReview.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
@@ -44,3 +41,4 @@ UserReview.propTypes = {
   bookId: PropTypes.number,
   setReRender: PropTypes.func
 };
+export default UserReview;

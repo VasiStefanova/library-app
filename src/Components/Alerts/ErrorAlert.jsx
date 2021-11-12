@@ -11,7 +11,6 @@ const AlertDismissible = ({ isBanned, history }) => {
     setShow(false);
     history.push('/nothing');
     history.goBack();
-    // setRefresh({});
   };
 
   if (show) {
