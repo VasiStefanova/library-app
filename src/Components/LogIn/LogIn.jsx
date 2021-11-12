@@ -5,6 +5,7 @@ import './LogIn.css';
 import PropTypes from 'prop-types';
 import { getUser, AuthContext } from '../../context/auth-context';
 import AlertDismissible from '../Alerts/ErrorAlert';
+import fetchRequest from '../../requests/server-requests';
 
 const LogIn = ({ history }) => {
   const [valid, setValid] = useState(false);
@@ -29,15 +30,15 @@ const LogIn = ({ history }) => {
     event.preventDefault();
     event.stopPropagation();
     setValid(!valid);
-    fetch(`http://localhost:5000/api/v1/users/login`, {
+
+    const args = {
       method: 'POST',
       body: JSON.stringify(form),
       headers: {
         'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then((data)=> {
+      },
+      path: 'users/login',
+      handler: (data)=> {
         if (!data.token) {
           throw new Error(data.message);
         }
@@ -50,11 +51,12 @@ const LogIn = ({ history }) => {
         } catch {
           throw new Error('Something went wrong!');
         }
-      })
-      .catch(err => {
-        console.error(err);
+      },
+      errorHandler: err => {
         setErrMsg(err);
-      });
+      } };
+
+    fetchRequest(args);
   };
 
 

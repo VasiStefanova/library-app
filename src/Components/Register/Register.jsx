@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './Register.css';
 import PropTypes from 'prop-types';
+import fetchRequest from '../../requests/server-requests';
 
 
 const Register = ({ history }) => {
@@ -23,18 +24,15 @@ const Register = ({ history }) => {
     const formData = new FormData();
     Object.keys(form).forEach(key => formData.append(key, form[key]));
 
-
-    fetch(`http://localhost:5000/api/v1/users/`, {
+    const args = {
+      path: 'users/',
       method: 'POST',
       body: formData,
-    })
-      .then(response => response.json())
-      .then((response)=> {
-        if (response.id) {
-          history.push('/login');
-        }
-      })
-      .catch(err => console.error(err));
+      handler: (response)=> {
+        response.id && history.push('/login');
+      } };
+
+    fetchRequest(args);
   };
 
   return (

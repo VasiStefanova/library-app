@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { getToken } from '../../context/auth-context';
-
+import fetchRequest from '../../requests/server-requests';
 
 const FormToBanUser = ({ userId, setRender }) => {
 
@@ -23,21 +23,20 @@ const FormToBanUser = ({ userId, setRender }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log(form);
     setValid(!valid);
-    fetch(`http://localhost:5000/api/v1//admin/users/${userId}/ban`, {
+
+    const args = {
+      path: `admin/users/${userId}/ban`,
       method: 'PUT',
       body: JSON.stringify(form),
       headers: {
+        'Content-type': 'application/json',
         'Authorization': `Bearer ${getToken()}`,
-        'Content-Type': 'application/json'
-      }
+      },
+      handler: () => setRender({})
+    };
 
-    })
-      .then(response => response.json())
-      .then(() => setRender({}))
-      .catch(err => console.error(err));
-
+    fetchRequest(args);
   };
 
   return (

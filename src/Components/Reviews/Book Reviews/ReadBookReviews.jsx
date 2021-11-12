@@ -8,29 +8,28 @@ import UserReview from '../User Review/UserReviews';
 import { getToken } from '../../../context/auth-context';
 import LeaveReview from '../User Review/LeaveReview';
 import { AuthContext } from '../../../context/auth-context';
+import fetchRequest from '../../../requests/server-requests';
 
 
 const ReadBookReviews = ({ id }) => {
-  // const id = props.match.params.id;
-
-  const [bookInfo, setBookInfo] = useState({});
   const [reviews, setReviews] = useState([]);
   // This will be used by child components
   // to trigger useEffect on some change in the child.
   const [reRender, setReRender] = useState({});
   const { user, isBanned } = useContext(AuthContext);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/books/${id}/reviews`, {
+
+    const args = {
+      path: `books/${id}/reviews`,
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },
-    })
-      .then(response => response.json())
-      .then(data => {
+      handler: data =>{
         setReviews(data);
-        setBookInfo(data[0] || {});
-      })
-      .catch(err => console.error(err));
+      }
+    };
+
+    fetchRequest(args);
   }, [id, reRender]);
 
 

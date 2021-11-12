@@ -1,21 +1,23 @@
 import { AuthContext, getToken } from '../../../context/auth-context';
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-
+import fetchRequest from '../../../requests/server-requests';
 
 const Like = ({ bookId, reviewerId, setReRender, votes }) => {
   const { user, isBanned } = useContext(AuthContext);
 
   const toggleLike = () => {
-    fetch(`http://localhost:5000/api/v1/books/${bookId}/reviews/${reviewerId}`, {
+
+    const args = {
+      path: `books/${bookId}/reviews/${reviewerId}`,
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${getToken()}`,
-      }
-    })
-      .then(response => response.json())
-      .then(() => setReRender({}))
-      .catch(err => console.error(err));
+      },
+      handler: () => setReRender({})
+    };
+
+    fetchRequest(args);
   };
 
   return votes.find(vote => vote.userId === user.id) ?

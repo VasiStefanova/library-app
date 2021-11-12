@@ -3,47 +3,46 @@ import { useState, useContext } from 'react';
 import { AuthContext, getToken } from '../../context/auth-context';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import fetchRequest from '../../requests/server-requests';
 
-// under construction
-// eslint-disable-next-line react/prop-types
+
 const BorrowBook = ({ id, userId, changeBookStatus }) =>{
   const [BookUserId=userId, setBookUserId] = useState(userId);
   const { user, isBanned } = useContext(AuthContext);
 
-  const borrowBook = () =>{
-    fetch(`http://localhost:5000/api/v1/books/${id}/`, {
+  const borrowBook = () => {
+
+    const args = {
+      path: `books/${id}`,
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },
-    })
-
-      .then(response => response.json())
-      .then(data =>{
+      handler: data =>{
         changeBookStatus(data.status);
         setBookUserId(data.userId);
       }
-      )
-      .catch(err => console.error(err));
+    };
 
+    fetchRequest(args);
   };
-  const returnBook = () =>{
-    fetch(`http://localhost:5000/api/v1/books/${id}/`, {
+
+  const returnBook = () => {
+
+    const args = {
+      path: `books/${id}`,
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },
-    })
-
-      .then(response => response.json())
-      .then(data =>{
+      handler: data =>{
         changeBookStatus(data.status);
         setBookUserId(data.userId);
       }
-      )
-      .catch(err => console.error(err));
+    };
+
+    fetchRequest(args);
   };
-  // userId = null av || userId===user Idlogin return, userId!==
   if (BookUserId===null ) {
     return <Button disabled={isBanned} onClick={borrowBook}>Borrow</Button>;
   } else if (BookUserId===user.id) {
@@ -54,7 +53,7 @@ const BorrowBook = ({ id, userId, changeBookStatus }) =>{
 
 };
 
-BorrowBook.propsTypes={
+BorrowBook.propTypes = {
   id: PropTypes.number,
   userId: PropTypes.any,
   changeBookStatus: PropTypes.func

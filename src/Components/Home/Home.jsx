@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import AlertDismissible from '../Alerts/ErrorAlert';
+import fetchRequest from '../../requests/server-requests';
 
 
 const Home = () => {
@@ -12,17 +13,20 @@ const Home = () => {
   const { user, isLoggedIn, isBanned } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/books/`, {
+
+    const args = {
+      path: 'books',
       headers: {
-      // hard-coded token to show carousel//
-        // eslint-disable-next-line max-len
+        // hard-coded token to show carousel//
+      // eslint-disable-next-line max-len
         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmVvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM0NTc4MDEwLCJleHAiOjE2NDMyMTgwMTB9.Pt1dfv0OcyfThoF5hCbeFVq9KX4rN4QNL1EqlMd3-UI',
       },
-    })
+      handler: data => {
+        setBooks(data.books);
+      }
+    };
 
-      .then(response => response.json())
-      .then(data => setBooks(data.books))
-      .catch(err => console.error(err));
+    fetchRequest(args);
   }, []);
 
   const carouselBooks = books.map((book) => {

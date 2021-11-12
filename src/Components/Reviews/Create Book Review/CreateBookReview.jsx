@@ -7,56 +7,54 @@ import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Figure from 'react-bootstrap/Figure';
 import './CreateBookReview.css';
+import fetchRequest from '../../../requests/server-requests';
 
 const CreateBookReview = ({ match, history }) => {
 
   const [form, setForm] = useState({});
-
   const setField = (field, value) => {
     form[field] = value;
     setForm(form);
   };
-
   const [bookInfo, setBookInfo] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/books/${match.params.id}`, {
+
+    const args = {
+      path: `books/${match.params.id}`,
       headers: {
-        // Hardcoded authorization token//
-        // eslint-disable-next-line max-len
         'Authorization': `Bearer ${getToken()}`,
       },
-    })
-      .then(response => response.json())
-      .then(data => {
+      handler: data =>{
         setBookInfo(data);
-      })
-      .catch(err => console.error(err));
+      }
+    };
+
+    fetchRequest(args);
   }, [match.params.id]);
 
 
   const onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    // setValid(!valid);
 
-    // eslint-disable-next-line react/prop-types
-    fetch(`http://localhost:5000/api/v1/books/${match.params.id}/reviews`, {
+    const args = {
+      path: `books/${match.params.id}/reviews`,
       method: 'POST',
       body: JSON.stringify(form),
       headers: {
         'Content-type': 'application/json',
         'Authorization': `Bearer ${getToken()}`,
-      }
-    })
-      .then(response => response.json())
-      .then((response)=> {
+      },
+      handler: response => {
         if (response.message) {
           throw new Error(response.message);
         }
         history.goBack();
-      })
-      .catch(({ message }) => console.error(message));
+      }
+    };
+
+    fetchRequest(args);
   };
 
   return (

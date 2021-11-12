@@ -8,33 +8,30 @@ import Card from 'react-bootstrap/Card';
 import { useState, useEffect } from 'react';
 import { getToken } from '../../context/auth-context';
 import PropTypes from 'prop-types';
+import fetchRequest from '../../requests/server-requests';
 
 
 const ShowAllBooks = ({ history }) =>{
 
   const [books, setBooks] = useState([]);
 
-
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/books/`, {
+    const args = {
+      path: `books`,
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },
-    })
+      handler: data => setBooks(data.books)
+    };
 
-      .then(response => response.json())
-      .then(data => setBooks(data.books))
-      .catch(err => console.error(err));
+    fetchRequest(args);
   }, []);
 
 
   const routeChange = (id) =>{
     const path = `/books/${id}`;
     history.push(path);
-    // history.push('/nothing');
-    // history.goBack();
   };
-
 
   return (
     <Container>

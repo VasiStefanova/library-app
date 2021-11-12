@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import SingleUser from './SingleUser';
 import { getToken } from '../../context/auth-context';
 import './ShowAllUsers.css';
+import fetchRequest from '../../requests/server-requests';
 
 const ShowAllUsers = () => {
 
@@ -11,16 +12,16 @@ const ShowAllUsers = () => {
 
   useEffect(() => {
 
-    fetch('http://localhost:5000/api/v1/admin/users/', {
+    const args = {
+      path: 'admin/users',
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },
-    })
-      .then(response => response.json())
-      .then(data => setUsers(data))
-      .catch(err => console.error(err));
-  }, [render]);
+      handler: data => setUsers(data)
+    };
 
+    fetchRequest(args);
+  }, [render]);
 
   return (
     <>

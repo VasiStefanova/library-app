@@ -3,23 +3,24 @@ import { AuthContext } from '../../../context/auth-context';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import { getToken } from '../../../context/auth-context';
+import fetchRequest from '../../../requests/server-requests';
 
 const DeleteUserOwnReview = ({ userId, bookId, setReRender }) => {
 
   const { user, isBanned } = useContext(AuthContext);
 
   const deleteReview = () => {
-    fetch(`http://localhost:5000/api/v1/books/${bookId}/reviews`, {
+
+    const args = {
+      path: `books/${bookId}/reviews`,
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${getToken()}`,
-      }
-    })
-      .then(response => response.json())
-      .then(() => {
-        setReRender({});
-      })
-      .catch(err => console.error(err));
+      },
+      handler: () => setReRender({})
+    };
+
+    fetchRequest(args);
   };
 
   return user.id === userId ?(

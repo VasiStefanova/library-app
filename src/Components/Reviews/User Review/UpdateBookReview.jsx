@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { getToken } from '../../../context/auth-context';
 import Container from 'react-bootstrap/Container';
 import Figure from 'react-bootstrap/Figure';
+import fetchRequest from '../../../requests/server-requests';
 
 
 const UpdateBookReview = ({ match, history }) => {
@@ -22,41 +23,44 @@ const UpdateBookReview = ({ match, history }) => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/users/${user.id}/reviews`, {
+
+    const args = {
+      path: `users/${user.id}/reviews`,
       headers: {
         'Authorization': `Bearer ${getToken()}`,
-      }
-    })
-      .then(respone => respone.json())
-      .then(data => {
+      },
+      handler: data => {
         const { title, content, bookTitle, cover } = data.find(r => r.bookId === bookId);
         setBookInfo({ bookTitle, cover });
         setBookReview({ title, content });
-      })
-      .catch(err => console.error(err));
+      }
+    };
+
+    fetchRequest(args);
   }, []);
+
 
   const onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    // setValid(!valid);
 
-    fetch(`http://localhost:5000/api/v1/books/${bookId}/reviews`, {
+    const args = {
+      path: `books/${bookId}/reviews`,
       method: 'PUT',
       body: JSON.stringify(bookReview),
       headers: {
         'Content-type': 'application/json',
         'Authorization': `Bearer ${getToken()}`,
-      }
-    })
-      .then(response => response.json())
-      .then((response)=> {
+      },
+      handler: response => {
         if (response.message) {
           throw new Error(response.message);
         }
         history.goBack();
-      })
-      .catch(({ message }) => console.error(message));
+      }
+    };
+
+    fetchRequest(args);
   };
 
   return (

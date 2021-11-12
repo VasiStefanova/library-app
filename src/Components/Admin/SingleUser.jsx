@@ -7,59 +7,60 @@ import { getToken } from '../../context/auth-context';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/esm/Accordion';
 import FormToBanUser from './FormToBanUser';
+import fetchRequest from '../../requests/server-requests';
 
 
 const SingleUser = ({ setRender, userId, username, avatar, role, points, banstatus, deleted }) => {
 
   const deleteUser = () => {
 
-    fetch(`http://localhost:5000/api/v1/admin/users/${userId}`, {
+    const args = {
+      path: `admin/users/${userId}`,
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${getToken()}`,
-      }
-    })
-      .then(response => response.json())
-      .then(() => setRender({}))
-      .catch(err => console.error(err));
+      },
+      handler: () => setRender({})
+    };
 
+    fetchRequest(args);
   };
 
   const unDeleteUser = () => {
 
-    fetch(`http://localhost:5000/api/v1/admin/users/${userId}`, {
+    const args = {
+      path: `admin/users/${userId}`,
       method: 'PUT',
       body: JSON.stringify({ 'deleted': 0 }),
       headers: {
         'Authorization': `Bearer ${getToken()}`,
         'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(() => setRender({}))
-      .catch(err => console.error(err));
+      },
+      handler: () => setRender({})
+    };
+
+    fetchRequest(args);
   };
 
   const removeBan = () => {
 
-    fetch(`http://localhost:5000/api/v1//admin/users/${userId}/ban`, {
+    const args = {
+      path: `admin/users/${userId}/ban`,
       method: 'PUT',
       body: JSON.stringify({
         'banned': 0,
         'description': 'unbanned',
-        // just a random date in the future so the unban point works//
+        // just a random date in the future in ms so the unban server endpoint works//
         'expiration': 1637712000000
       }),
       headers: {
         'Authorization': `Bearer ${getToken()}`,
         'Content-Type': 'application/json'
-      }
+      },
+      handler: () => setRender({})
+    };
 
-    })
-      .then(response => response.json())
-      .then(() => setRender({}))
-      .catch(err => console.error(err));
-
+    fetchRequest(args);
   };
 
   return (

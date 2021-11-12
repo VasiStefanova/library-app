@@ -8,6 +8,7 @@ import { getToken } from '../../context/auth-context';
 import Container from 'react-bootstrap/Container';
 import ReadBookReviews from '../Reviews/Book Reviews/ReadBookReviews';
 import './ViewIndividualBook.css';
+import fetchRequest from '../../requests/server-requests';
 
 
 const ViewIndividualBook = (props) => {
@@ -18,20 +19,20 @@ const ViewIndividualBook = (props) => {
   const back = () => props.history.goBack();
 
   useEffect(()=>{
-    fetch(`http://localhost:5000/api/v1/books/${id}/`, {
+
+    const args = {
+      path: `books/${id}`,
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },
-    })
-
-      .then(response => response.json())
-      .then(data => {
+      handler: data =>{
         setBook(data);
         setBookStatus(data.status);
-      })
-      .catch(err => console.error(err));
-  }, [bookStatus]);
+      }
+    };
 
+    fetchRequest(args);
+  }, [bookStatus]);
 
   return (
     <>
