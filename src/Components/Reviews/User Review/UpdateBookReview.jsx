@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../../../../context/auth-context';
+import { AuthContext } from '../../../context/auth-context';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
-import { getToken } from '../../../../context/auth-context';
+import { getToken } from '../../../context/auth-context';
 import Container from 'react-bootstrap/Container';
 import Figure from 'react-bootstrap/Figure';
 

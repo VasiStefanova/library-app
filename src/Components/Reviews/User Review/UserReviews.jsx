@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import PropTypes from 'prop-types';
 import Figure from 'react-bootstrap/Figure';
 import UpdateUserReviewsLink from './UpdateUserReviewsLink';
-import defaultAvatar from '../../../../Data/default-avatar.png';
+import defaultAvatar from '../../../Data/default-avatar.png';
 import DeleteUserOwnReview from './DeleteUserOwnReview';
 import Like from './LikeReviews';
 import Button from '@restart/ui/esm/Button';

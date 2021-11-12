@@ -1,4 +1,4 @@
-import { AuthContext, getToken } from '../../../../context/auth-context';
+import { AuthContext, getToken } from '../../../context/auth-context';
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 

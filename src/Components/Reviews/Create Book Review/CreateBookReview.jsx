@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { getToken } from '../../../../context/auth-context';
+import { getToken } from '../../../context/auth-context';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Figure from 'react-bootstrap/Figure';
 import './CreateBookReview.css';
 
-// eslint-disable-next-line react/prop-types
 const CreateBookReview = ({ match, history }) => {
 
   const [form, setForm] = useState({});

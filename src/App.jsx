@@ -12,8 +12,8 @@ import ViewIndividualBook from './Components/Books/ViewIndividualBook';
 import ReadBookReviews from './Components/Reviews/Book Reviews/ReadBookReviews';
 import { AuthContext, getUser, getDecodedUser } from './context/auth-context';
 import PropTypes from 'prop-types';
-import CreateBookReview from './Components/Reviews/Book Reviews/Create Book Review/CreateBookReview';
-import UpdateBookReview from './Components/Reviews/Book Reviews/User Review/UpdateBookReview';
+import CreateBookReview from './Components/Reviews/Create Book Review/CreateBookReview';
+import UpdateBookReview from './Components/Reviews/User Review/UpdateBookReview';
 import ShowAllUsers from './Components/Admin/ShowAllUsers';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {

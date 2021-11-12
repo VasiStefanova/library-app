@@ -4,9 +4,9 @@ import Row from 'react-bootstrap/Row';
 import React from 'react';
 import { useEffect, useState, useContext } from 'react';
 import './ReadBookReviews.css';
-import UserReview from './User Review/UserReviews';
+import UserReview from '../User Review/UserReviews';
 import { getToken } from '../../../context/auth-context';
-import LeaveReview from './User Review/LeaveReview';
+import LeaveReview from '../User Review/LeaveReview';
 import { AuthContext } from '../../../context/auth-context';
 
 

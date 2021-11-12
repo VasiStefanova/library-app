@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../../../context/auth-context';
+import { AuthContext } from '../../../context/auth-context';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import { getToken } from '../../../../context/auth-context';
+import { getToken } from '../../../context/auth-context';
 
 const DeleteUserOwnReview = ({ userId, bookId, setReRender }) => {
 

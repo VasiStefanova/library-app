@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../../../context/auth-context';
+import { AuthContext } from '../../../context/auth-context';
 import './UpdateUserReviewsLink.css';
 
 import Button from 'react-bootstrap/Button';
