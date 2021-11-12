@@ -1,18 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext, getToken } from '../../context/auth-context';
+import { AuthContext } from '../../context/auth-context';
 import './Home.css';
 import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import AlertDismissible from '../Alerts/ErrorAlert';
 
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
   const { user, isLoggedIn, isBanned } = useContext(AuthContext);
-  const [errMsg, setErrMsg] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/v1/books/`, {
@@ -25,11 +22,7 @@ const Home = () => {
 
       .then(response => response.json())
       .then(data => setBooks(data.books))
-      .catch(err => {
-        setErrMsg(err.message);
-        console.error(err);
-      }
-      );
+      .catch(err => console.error(err));
   }, []);
 
   const carouselBooks = books.map((book) => {

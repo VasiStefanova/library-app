@@ -3,16 +3,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './LogIn.css';
 import PropTypes from 'prop-types';
-import { getUser, getToken } from '../../context/auth-context';
-import { AuthContext, fetchUserInfo } from '../../context/auth-context';
+import { getUser, AuthContext } from '../../context/auth-context';
 import AlertDismissible from '../Alerts/ErrorAlert';
 
 const LogIn = ({ history }) => {
   const [valid, setValid] = useState(false);
   const [form, setForm] = useState({});
   const [errMsg, setErrMsg] = useState('');
-  const [refresh, setRefresh] = useState({});
-
   const { setAuth } = useContext(AuthContext);
 
   const setField = (field, value) => {
@@ -38,7 +35,6 @@ const LogIn = ({ history }) => {
       headers: {
         'Content-Type': 'application/json'
       }
-
     })
       .then(response => response.json())
       .then((data)=> {

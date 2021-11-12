@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import defaultAvatar from '../.././Data/default-avatar.png';
 import Figure from 'react-bootstrap/Figure';
